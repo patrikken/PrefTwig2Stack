@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Any collection="mapped" type="Any">
+    <Any collection="mapped" key="buyerParties" type="Any">
+        <Person collection="indexed" key="AO" type="Person">
+            <PhysicalPerson index="1" type="PhysicalPerson">
+                <canBeInvited>true</canBeInvited>
+                <contactDetails type="ContactDetails">
+                    <emails collection="indexed" type="Email">
+                        <Email index="1" type="Email">
+                            <email>kenfackjoslin+1buyer@gmail.com</email>
+                        </Email>
+                    </emails>
+                    <postalAddresses collection="indexed" type="PostMail"/>
+                    <telephones collection="indexed" type="Phone"/>
+                </contactDetails>
+                <countryOfBirth/>
+                <favouriteNotary collection="indexed" type="FavouriteNotary"/>
+                <firstName>kenfack</firstName>
+                <hasSentDocument>false</hasSentDocument>
+                <isActiveInProcess>true</isActiveInProcess>
+                <isExistingInBackEnd>false</isExistingInBackEnd>
+                <isInvited>true</isInvited>
+                <kycProfile type="KYCProfilePhysicalPerson"/>
+                <lastName>buyer</lastName>
+                <matrimonialRegime type="MatrimonialRegime"/>
+                <personType>individual</personType>
+                <placeOfBirth/>
+                <userID>kenfackjoslin+1buyer@gmail.com</userID>
+            </PhysicalPerson>
+        </Person>
+        <Person collection="indexed" key="BO" type="Person"/>
+        <Person collection="indexed" key="authSignature" type="Person"/>
+        <Person collection="indexed" key="notary" type="Person"/>
+        <Person collection="indexed" key="renter" type="Person"/>
+    </Any>
+    <Deed key="deed" type="Deed">
+        <asset type="Forest">
+            <buyerDealConditions type="ForestDealCondition">
+                <hasPreferenceRight>false</hasPreferenceRight>
+                <hasSpecialConditions>false</hasSpecialConditions>
+            </buyerDealConditions>
+            <description>152nbien</description>
+            <parcels collection="indexed" type="Parcel">
+                <Parcel index="1" type="Parcel">
+                    <address type="PostMail">
+                        <city>c123</city>
+                        <co/>
+                        <country>AT</country>
+                        <number>12</number>
+                        <street>12</street>
+                        <zip>z12</zip>
+                    </address>
+                    <forestOperator type="Person">
+                        <contactDetails type="ContactDetails">
+                            <emails collection="indexed" type="Email"/>
+                            <postalAddresses collection="indexed" type="PostMail"/>
+                            <telephones collection="indexed" type="Phone"/>
+                        </contactDetails>
+                        <favouriteNotary collection="indexed" type="FavouriteNotary"/>
+                        <kycProfile type="KYCProfilePerson"/>
+                        <personType>person</personType>
+                    </forestOperator>
+                    <nature>wood</nature>
+                    <reference>123</reference>
+                    <status>free</status>
+                    <surface>123</surface>
+                    <surfaceUnit>metre</surfaceUnit>
+                    <takingPossession>perceptionRent</takingPossession>
+                </Parcel>
+            </parcels>
+            <vendorDealConditions type="ForestDealCondition">
+                <hasPreferenceRight>false</hasPreferenceRight>
+                <hasSpecialConditions>false</hasSpecialConditions>
+            </vendorDealConditions>
+        </asset>
+        <financialConditions type="FinancialConditions">
+            <acceptedPaymentMethods collection="indexed" type="String"/>
+            <agreedAssetPrice>0</agreedAssetPrice>
+            <assetValue>1220</assetValue>
+            <assetValueCurrency>eur</assetValueCurrency>
+            <fees collection="indexed" type="Fee">
+                <Fee index="1" type="Fee">
+                    <amount>200.0</amount>
+                    <isFixed>false</isFixed>
+                </Fee>
+            </fees>
+            <paymentTerms>cashOnDelivery</paymentTerms>
+            <payments collection="indexed" type="Payment"/>
+        </financialConditions>
+        <notary>PatrikKenfack</notary>
+        <notaryOffice>BlueNotaryOffice</notaryOffice>
+        <subType>forest</subType>
+        <type>realEstate</type>
+    </Deed>
+    <Any collection="mapped" key="vendorParties" type="Any">
+        <Person collection="indexed" key="AO" type="Person">
+            <PhysicalPerson index="1" type="PhysicalPerson">
+                <canBeInvited>true</canBeInvited>
+                <contactDetails type="ContactDetails">
+                    <emails collection="indexed" type="Email">
+                        <Email index="1" type="Email">
+                            <email>kenfackjoslin+1vendor@gmail.com</email>
+                        </Email>
+                    </emails>
+                    <postalAddresses collection="indexed" type="PostMail"/>
+                    <telephones collection="indexed" type="Phone"/>
+                </contactDetails>
+                <countryOfBirth/>
+                <favouriteNotary collection="indexed" type="FavouriteNotary"/>
+                <firstName>kenfack</firstName>
+                <hasSentDocument>false</hasSentDocument>
+                <isActiveInProcess>true</isActiveInProcess>
+                <isExistingInBackEnd>false</isExistingInBackEnd>
+                <isInvited>true</isInvited>
+                <kycProfile type="KYCProfilePhysicalPerson"/>
+                <lastName>vendor</lastName>
+                <matrimonialRegime type="MatrimonialRegime"/>
+                <personType>individual</personType>
+                <placeOfBirth/>
+                <userID>kenfackjoslin+1vendor@gmail.com</userID>
+            </PhysicalPerson>
+        </Person>
+        <Person collection="indexed" key="BO" type="Person"/>
+        <Person collection="indexed" key="authSignature" type="Person"/>
+        <Person collection="indexed" key="notary" type="Person">
+            <Notary index="1" type="Notary">
+                <canBeInvited>true</canBeInvited>
+                <contactDetails type="ContactDetails">
+                    <emails collection="indexed" type="Email">
+                        <Email index="1" type="Email">
+                            <email>PatrikKenfack</email>
+                        </Email>
+                    </emails>
+                    <postalAddresses collection="indexed" type="PostMail"/>
+                    <telephones collection="indexed" type="Phone"/>
+                </contactDetails>
+                <countryOfBirth/>
+                <favouriteNotary collection="indexed" type="FavouriteNotary"/>
+                <firstName>Patrik</firstName>
+                <hasSentDocument>false</hasSentDocument>
+                <isActiveInProcess>true</isActiveInProcess>
+                <isExistingInBackEnd>false</isExistingInBackEnd>
+                <isInvited>true</isInvited>
+                <kycProfile type="KYCProfilePhysicalPerson"/>
+                <lastName>Kenfack</lastName>
+                <matrimonialRegime type="MatrimonialRegime"/>
+                <personType>notary</personType>
+                <placeOfBirth/>
+                <userID>PatrikKenfack</userID>
+            </Notary>
+        </Person>
+        <Person collection="indexed" key="renter" type="Person"/>
+    </Any>
+</Any>

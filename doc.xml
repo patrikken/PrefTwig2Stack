@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<personnes>
+		<personne id="122">
+			<profile>
+				<nom>Joel Dong</nom>
+				<email>joeldong@gmail.com</email>
+			</profile>
+			<diplome>Bac+5</diplome>
+			<experience>3ans</experience>
+			<competances>
+				<java>3</java>
+				<spring-mvc>4</spring-mvc>
+				<symfony>4</symfony>
+			</competances>
+		</personne>
+		<personne id="123">
+			<profile>
+				<nom>Farel Ken</nom>
+				<email>farelken@yahoo.fr</email> 
+			</profile>
+			<diplome>Bac+3</diplome>
+			<experience>1ans</experience>
+			<competances>
+				<PHP>3</PHP>
+			</competances>
+		</personne>
+	</personnes>  
+
+
