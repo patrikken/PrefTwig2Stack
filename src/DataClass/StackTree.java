@@ -77,19 +77,40 @@ public class StackTree {
     }
     
     public DocElement top(){
+        /*if(!racine.isEmpty()) return racine.top();
+        return childs.get(childs.size()-1).top();*/
         return racine.top();
     }
     
-    public StackTree getSTWitchContaints(DocElement e){
+    public StackTree getSTContaints(DocElement e){
         StackTree toRet = null;
         if(racine.containt(e))
             return this;
         if(!isLeaf())
             for(StackTree st:childs){
-                st = st.getSTWitchContaints(e);
-                    if(st != null) break;
+                toRet = st.getSTContaints(e);
+                    if(toRet != null) break;
             }
         return toRet;
+    }
+    
+    public Tree toTree(int index){
+        Tree t=new Tree(racine.get(index));
+         Tree t3,t4;
+         t3 = t;
+         for(int i = index+1; i < racine.size(); i++){
+             t4 = new Tree(racine.get(i));
+             t3.addChild(t4);
+             t3 = t4;
+         } 
+         for(StackTree st:childs){
+             t3.addChild(st.toTree(0));
+         }
+         return t;
+    }
+    
+    public int indexOf(DocElement e){
+        return racine.getIndex(e);
     }
 
     @Override

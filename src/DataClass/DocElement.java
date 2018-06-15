@@ -19,7 +19,7 @@ public class DocElement {
     private String tag;
     private String value;
     
-    private ArrayList<Axis<DocElement>> childsResults;
+    private ArrayList<Axis<ChildResults>> childsResults;
 
     public DocElement(String tag) {
         this.leftPos = 0;
@@ -79,27 +79,27 @@ public class DocElement {
         this.value = value;
     }
 
-    public void addPNEdge(DocElement e) {
-        Axis<DocElement> axis=new Axis(Constantes.PN_EDGE,e);
+    public void addPNEdge(DocElement e, String hsName) {
+        Axis<ChildResults> axis=new Axis(Constantes.PN_EDGE,new ChildResults(e, hsName));
+        childsResults.add(axis);
+    } 
+    
+    public void addPCEdge(DocElement e, String hsName){
+        Axis<ChildResults> axis=new Axis(Constantes.PC_EDGE,new ChildResults(e, hsName));
         childsResults.add(axis);
     }
     
-    public void addPCEdge(DocElement e){
-        Axis<DocElement> axis=new Axis(Constantes.PC_EDGE,e);
-        childsResults.add(axis);
-    }
-    
-    public void addADEdge(DocElement e){
-        Axis<DocElement> axis=new Axis(Constantes.AD_EDGE,e);
+    public void addADEdge(DocElement e, String hsName){
+       Axis<ChildResults> axis=new Axis(Constantes.AD_EDGE,new ChildResults(e, hsName));
         childsResults.add(axis);
     }
 
-    public void addAPNEdge(DocElement e) {
-        Axis<DocElement> axis=new Axis(Constantes.PP_EDGE,e);
+    public void addAPNEdge(DocElement e, String hsName) {
+        Axis<ChildResults> axis=new Axis(Constantes.APN_EDGE,new ChildResults(e, hsName));
         childsResults.add(axis);
     }
 
-    public ArrayList<Axis<DocElement>> getChildsResults() {
+    public ArrayList<Axis<ChildResults>> getChildsResults() {
         return childsResults;
     } 
 

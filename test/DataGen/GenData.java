@@ -53,10 +53,10 @@ public class GenData {
         HierachicalStack Hs = new HierachicalStack("personne");
         
         HierachicalStack childHS = new HierachicalStack("profile");
-        Hs.addChildsHS(childHS, Constantes.APN_EDGE); 
+        Hs.addChildsHS(childHS, Constantes.AD_EDGE); 
         
         HierachicalStack childHS3 = new HierachicalStack("nom");
-        childHS.addChildsHS(childHS3, Constantes.AD_EDGE); 
+        childHS.addChildsHS(childHS3, Constantes.PN_EDGE); 
         
         HierachicalStack childHS2 = new HierachicalStack("competances");
         Hs.addChildsHS(childHS2, Constantes.PC_EDGE);

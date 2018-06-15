@@ -15,4 +15,11 @@ public abstract class Constantes {
     public static String PN_EDGE = "PN";
     public static String APN_EDGE = "APN";
     public static String PP_EDGE = "PP";
+    public static boolean  isADedge(String axis){
+         return (axis.equals(AD_EDGE) || axis.equals(APN_EDGE) || axis.equals(PP_EDGE));
+     }
+     
+    public static boolean isPCedge(String axis){
+         return (axis.equals(PC_EDGE) || axis.equals(PN_EDGE));
+     }
 }

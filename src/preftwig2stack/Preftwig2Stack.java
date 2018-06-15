@@ -7,6 +7,7 @@ package preftwig2stack;
 
 import DataClass.DocElement;
 import DataClass.Stack;
+import DataClass.StackTree;
 import DataClass.XmlDocument;
 import Helpers.Utils;
 import View.Home;
@@ -42,11 +43,11 @@ public class Preftwig2Stack {
             doc.buildStack(stack);
             DocElement e = new DocElement("e");
             stack.push(e);
-             stack.push(new DocElement());
-            int i = stack.getIndex(e);
-            System.out.println("index="+i);
+            stack.push(new DocElement());
+            int i = stack.getIndex(e); 
+            System.out.println("index="+i); 
             Home fen = new Home(doc); 
-            
+           // fen.setVisible(true);
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Preftwig2Stack.class.getName()).log(Level.SEVERE, null, ex);
         }

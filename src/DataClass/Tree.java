@@ -27,6 +27,18 @@ public class Tree {
     public ArrayList<Tree> getChilds() {
         return childs;
     }
+    
+    public ArrayList<DocElement> getChildsElement() {
+        ArrayList<DocElement> toRet = new ArrayList<>();
+        childs.forEach((t) -> {
+            toRet.add(t.getRoot());
+        });
+        return toRet;
+    }
+    
+    public void addChild(Tree t){
+        childs.add(t);
+    }
 
     public void setChilds(ArrayList<Tree> childs) {
         this.childs = childs;
@@ -36,6 +48,15 @@ public class Tree {
         this.root = root;
         this.childs = new ArrayList<>();
     }
-    
-    
+
+    @Override
+    public String toString() {
+        String s = root.toString() +"[";
+        for(Tree t: childs){
+            s+= t.toString();
+        }
+        s+="]";
+        return s;
+    }
+     
 }

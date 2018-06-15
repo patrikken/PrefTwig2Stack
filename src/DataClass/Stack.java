@@ -29,6 +29,11 @@ public class Stack<T> {
         return toRet;
     }
     
+    public T get(int index){
+        T toRet = list.get(index); 
+        return toRet;
+    }
+    
     public boolean isEmpty(){
         return list.isEmpty();
     }
@@ -53,5 +58,6 @@ public class Stack<T> {
     public ArrayList<T> all(){
         return list;
     }
+     
      
 }

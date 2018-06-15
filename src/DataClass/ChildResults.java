@@ -10,32 +10,34 @@ package DataClass;
  * @author patrik
  */
 public class ChildResults {
-    private StackTree stackTree;
+    private DocElement element;
     
-    private int index;
+    private String hsName;
 
-    public ChildResults(StackTree stackTree, int index) {
-        this.stackTree = stackTree;
-        this.index = index;
+    public ChildResults(DocElement target, String hsName) {
+        this.element = target;
+        this.hsName = hsName;
+    }
+
+    public DocElement getElement() {
+        return element;
+    }
+
+    public void setElement(DocElement element) {
+        this.element = element;
+    }
+
+   
+
+    public String getHsName() {
+        return hsName;
+    }
+
+    public void setHsName(String hsName) {
+        this.hsName = hsName;
     }
     
     
-
-    public StackTree getStackTree() {
-        return stackTree;
-    }
-
-    public void setStackTree(StackTree stackTree) {
-        this.stackTree = stackTree;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-    
+ 
     
 }

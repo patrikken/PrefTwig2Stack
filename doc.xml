@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 	<personnes>
 		<personne id="122">
+			<profile>qsd</profile>
 			<profile>
 				<nom>Joel Dong</nom>
-				<email>joeldong@gmail.com</email>
-			</profile>
+				<email>joeldong@gmail.com</email>  
+			</profile> 
 			<diplome>Bac+5</diplome>
 			<experience>3ans</experience>
 			<competances>
@@ -15,7 +16,7 @@
 		</personne>
 		<personne id="123">
 			<profile>
-				<nom>Farel Ken</nom>
+				<nom>Farel Ken</nom> 
 				<email>farelken@yahoo.fr</email> 
 			</profile>
 			<diplome>Bac+3</diplome>
@@ -23,7 +24,7 @@
 			<competances>
 				<PHP>3</PHP>
 			</competances>
-		</personne>
+		</personne> 
 	</personnes>  
 
 

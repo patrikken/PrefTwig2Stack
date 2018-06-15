@@ -29,7 +29,7 @@ public class HierachicalStack {
     public HierachicalStack() {
         stackTrees = new ArrayList<>();
         childs = new ArrayList<>();
-        this.name = name;
+        this.name = "";
     }
 
     public HierachicalStack getMatchingQueryNode(String query_node) {
@@ -73,6 +73,7 @@ public class HierachicalStack {
     }
 
     public void addStackTree(StackTree st) {
+        
         this.stackTrees.add(0, st);
     }
 
@@ -97,7 +98,7 @@ public class HierachicalStack {
     public void push(DocElement e) {
         StackTree st = null;
         for (StackTree s : stackTrees) {
-            if (s.getLefPos() < e.getLeftPos() && e.getRigthPos() < s.getLefPos()) {
+            if (e.getLeftPos() < s.getLefPos() && s.getRigthPos() < e.getRigthPos()) {
                 st = s;
                 break;
             }
@@ -108,13 +109,35 @@ public class HierachicalStack {
             st.setRigthPos(e.getRigthPos());
             st.setLevel(e.getLevel());
             st.getRacine().push(e);
-            addStackTree(st);
+            addStackTree(st); 
         }else{
             st.setLefPos(e.getLeftPos());
             st.setRigthPos(e.getRigthPos());
             st.setLevel(e.getLevel());
-            st.getRacine().push(e); 
+            st.getRacine().push(e);  
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public StackTree getStackTreeContaint(DocElement e){
+        StackTree toRet = null;
+        for(StackTree st:stackTrees){
+            toRet = st.getSTContaints(e);
+            if(toRet != null) break;
+        }
+        
+        return toRet;
+    }
+    
+    public SOT makeSOT(){
+        SOT sot = new SOT();
+         for(StackTree st:stackTrees){
+             sot.addTree(st.toTree(0));
+         }
+         return sot;
     }
 
 }
