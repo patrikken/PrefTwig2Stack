@@ -77,4 +77,12 @@ public class XmlDocument {
             childs.get(i).buildStack(stack);
         } 
     }
+    
+    public void buildPrefStack(Stack<DocElementPref> stack) {
+        DocElementPref elem = new DocElementPref(root);
+        stack.push(elem);
+        for (int i = childs.size() - 1; i >=0 ; i--) {
+            childs.get(i).buildPrefStack(stack);
+        } 
+    }
 }

@@ -40,12 +40,12 @@ public class XMLHandler extends DefaultHandler {
 
     @Override
     public void startDocument() throws SAXException {
-        System.out.println("Helpers.XMLHandler.startDocument()");
+        //System.out.println("Helpers.XMLHandler.startDocument()");
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes atrbts) throws SAXException {
-        //System.out.println("qName param ="+qName); 
+        //System.out.println("qName param ="); 
         if (index == 1) {
             doc = new XmlDocument(qName);
             doc.getRoot().setLeftPos(index);

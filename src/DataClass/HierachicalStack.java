@@ -20,10 +20,20 @@ public class HierachicalStack {
 
     private String name;
 
+    private boolean isReturnNode;
+
     public HierachicalStack(String name) {
         stackTrees = new ArrayList<>();
         childs = new ArrayList<>();
         this.name = name;
+        isReturnNode = false;
+    }
+
+    public HierachicalStack(String name, boolean isReturnNode) {
+        this.stackTrees = new ArrayList<>();
+        this.childs = new ArrayList<>();
+        this.name = name;
+        this.isReturnNode = isReturnNode;
     }
 
     public HierachicalStack() {
@@ -72,26 +82,50 @@ public class HierachicalStack {
         this.stackTrees.remove(st);
     }
 
+    public void removeStackTree(int i) {
+        this.stackTrees.remove(i);
+    }
+
     public void addStackTree(StackTree st) {
-        
+
         this.stackTrees.add(0, st);
     }
 
     @Override
     public String toString() {
-        String s = "\n HS["+name+"] : ";
+        String s = "\n HS[" + name + "] : ";
         for (StackTree st : stackTrees) {
             s += st.toString() + "|\n";
         }
-        for(Axis<HierachicalStack> ax:childs){
+        for (Axis<HierachicalStack> ax : childs) {
             s += ax.getTarget().toString();
-           // s += "Parent : "+ " HS["+name+"] : "; 
+            // s += "Parent : "+ " HS["+name+"] : "; 
         }
         return s; //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public void addChildsHS(HierachicalStack child, String node_type){
-        Axis<HierachicalStack> axis = new Axis<>(node_type,child);
+
+    public String printTop() {
+        String s = "\n HS[" + name + "] : ";
+        for (StackTree st : stackTrees) {
+            s += st.toString() + "|\n";
+        }
+        return s; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String printWithPref() {
+        String s = "\n HS[" + name + "] : ";
+        for (StackTree st : stackTrees) {
+            s += st.toString() + "|\n";
+        }
+        for (Axis<HierachicalStack> ax : childs) {
+            s += ax.getTarget().toString();
+            // s += "Parent : "+ " HS["+name+"] : "; 
+        }
+        return s; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void addChildsHS(HierachicalStack child, String node_type) {
+        Axis<HierachicalStack> axis = new Axis<>(node_type, child);
         childs.add(axis);
     }
 
@@ -103,41 +137,76 @@ public class HierachicalStack {
                 break;
             }
         }
-        if(st == null){
+        if (st == null) {
             st = new StackTree();
             st.setLefPos(e.getLeftPos());
             st.setRigthPos(e.getRigthPos());
             st.setLevel(e.getLevel());
             st.getRacine().push(e);
-            addStackTree(st); 
-        }else{
+            addStackTree(st);
+        } else {
             st.setLefPos(e.getLeftPos());
             st.setRigthPos(e.getRigthPos());
             st.setLevel(e.getLevel());
-            st.getRacine().push(e);  
+            st.getRacine().push(e);
         }
     }
 
     public String getName() {
         return name;
     }
-    
-    public StackTree getStackTreeContaint(DocElement e){
+
+    public StackTree getStackTreeContaint(DocElement e) {
         StackTree toRet = null;
-        for(StackTree st:stackTrees){
+        for (StackTree st : stackTrees) {
             toRet = st.getSTContaints(e);
-            if(toRet != null) break;
+            if (toRet != null) {
+                break;
+            }
         }
-        
+
         return toRet;
     }
-    
-    public SOT makeSOT(){
+
+    public SOT makeSOT() {
         SOT sot = new SOT();
-         for(StackTree st:stackTrees){
-             sot.addTree(st.toTree(0));
-         }
-         return sot;
+        for (StackTree st : stackTrees) {
+            sot.addTree(st.toSOT(0));
+        }
+        return sot;
+    }
+
+    public boolean isReturnNode() {
+        return isReturnNode;
+    }
+
+    public void setIsReturnNode(boolean isReturnNode) {
+        this.isReturnNode = isReturnNode;
+    }
+
+    public boolean hasReturnNodeBelow() {
+        //if(isReturnNode) return true;
+        if (childs.isEmpty()) {
+            return false;
+        }
+        boolean toRet = false;
+        for (Axis<HierachicalStack> ax : childs) {
+            HierachicalStack target = ax.getTarget();
+            if (target.isReturnNode()) {
+                toRet = true;
+                break;
+            } else {
+                toRet = ax.getTarget().hasReturnNodeBelow();
+            }
+        }
+        return toRet;
+    }
+
+    public boolean isExistingCheckinNode() {
+        if (!isReturnNode && !hasReturnNodeBelow()) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -5,19 +5,18 @@
         <group>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/DocElement.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/Stack.java</file>
-            <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/test/preftwig2stack/MainFunctionsTest.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/Helpers/XMLHandler.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/Helpers/Constantes.java</file>
-            <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/test/DataGen/RandomString.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/XmlDocument.java</file>
-            <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/test/DataGen/GenData.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/Query.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/HierachicalStack.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/Tree.java</file>
+            <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/preftwig2stack/Twig2Stack.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/preftwig2stack/Preftwig2Stack.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/ChildResults.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/Helpers/Utils.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/StackTree.java</file>
+            <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/GTPResult.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/SOT.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/DataClass/Axis.java</file>
             <file>file:/home/patrik/NetBeansProjects/Preftwig2Stack/src/preftwig2stack/MainFunctions.java</file>

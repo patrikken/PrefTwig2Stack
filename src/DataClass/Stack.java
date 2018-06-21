@@ -58,6 +58,10 @@ public class Stack<T> {
     public ArrayList<T> all(){
         return list;
     }
+
+    public void removeAll() {
+        list.clear();
+    }
      
      
 }

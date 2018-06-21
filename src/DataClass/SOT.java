@@ -24,6 +24,14 @@ public class SOT {
         this.trees.add(t);
     }
 
+    public SOT(ArrayList<Tree> trees) {
+        this.trees = trees;
+    }
+
+    public SOT(SOT sot) {
+        this.trees = sot.getTrees();
+    }
+
     public void addTree(Tree t) {
         trees.add(t);
     }
@@ -37,11 +45,19 @@ public class SOT {
     public ArrayList<Tree> getTrees() {
         return trees;
     }
+    
+    public ArrayList<DocElement> getElements(){
+        ArrayList<DocElement> toRet = new ArrayList<>();
+        for(Tree t:trees){
+            toRet.addAll(t.getElements());
+        }
+        return toRet;
+    }
 
     @Override
     public String toString() {
         String s = "";
-        for (Tree t : trees) {
+        for (Tree t : trees) { 
             s += t.toString() + "|";
         }
         return s;
@@ -54,6 +70,14 @@ public class SOT {
     public DocElement next() {
         DocElement toRet = trees.get(0).getRoot();
         trees.remove(0);
+        return toRet;
+    }
+
+    public GTPResult convert2Tuple(String key) {
+        GTPResult toRet = new GTPResult();
+        for (Tree t : trees) {
+            toRet.addTuples(t.toTuples(key));
+        }
         return toRet;
     }
 

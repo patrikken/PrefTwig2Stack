@@ -6,12 +6,16 @@
 package DataClass;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  *
  * @author patrik
  */
 public class Tree {
+
     private DocElement root;
 
     private ArrayList<Tree> childs;
@@ -27,7 +31,7 @@ public class Tree {
     public ArrayList<Tree> getChilds() {
         return childs;
     }
-    
+
     public ArrayList<DocElement> getChildsElement() {
         ArrayList<DocElement> toRet = new ArrayList<>();
         childs.forEach((t) -> {
@@ -35,8 +39,8 @@ public class Tree {
         });
         return toRet;
     }
-    
-    public void addChild(Tree t){
+
+    public void addChild(Tree t) {
         childs.add(t);
     }
 
@@ -51,12 +55,37 @@ public class Tree {
 
     @Override
     public String toString() {
-        String s = root.toString() +"[";
-        for(Tree t: childs){
-            s+= t.toString();
+        String s = "";
+        s = root.toString() + "(" + root.getLeftPos() + "," + root.getRigthPos() + ")" + "[";
+        for (Tree t : childs) {
+            s += t.toString();
         }
-        s+="]";
+        s += "]";
         return s;
     }
-     
+
+    public ArrayList<DocElement> getElements() {
+        ArrayList<DocElement> toRet = new ArrayList<>();
+        toRet.add(root);
+        for (Tree t : childs) {
+            toRet.addAll(t.getElements());
+        }
+        return toRet;
+    }
+
+    public boolean isEmpty() {
+        return root == null && childs.isEmpty();
+    }
+
+    public ArrayList<Map<String, String>> toTuples(String key) {
+        ArrayList<Map<String, String>> toRet = new ArrayList<>();
+        Map<String, String> ht = new HashMap<>();
+        ht.put(key, root.print());
+        toRet.add(ht);
+        for (Tree t : childs) {
+            toRet.addAll(t.toTuples(key));
+        }
+        return toRet;
+    }
+
 }

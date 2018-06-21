@@ -22,4 +22,7 @@ public abstract class Constantes {
     public static boolean isPCedge(String axis){
          return (axis.equals(PC_EDGE) || axis.equals(PN_EDGE));
      }
+    public static boolean isPreference(String axis){
+        return (axis.equals(PN_EDGE) || axis.equals(APN_EDGE) || axis.equals(PP_EDGE));
+    }
 }
