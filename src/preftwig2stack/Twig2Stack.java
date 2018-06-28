@@ -26,7 +26,7 @@ import sun.util.logging.resources.logging;
  * @author patrik
  */
 public class Twig2Stack {
-
+ 
     public boolean merge(HierachicalStack HS, DocElement e, String axis) {
         boolean satisfied = false;
         ArrayList<StackTree> STS = new ArrayList<>();

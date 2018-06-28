@@ -19,6 +19,9 @@ import View.Home;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
@@ -52,48 +55,87 @@ public class Preftwig2Stack {
             Logger.getLogger(Preftwig2Stack.class.getName()).log(Level.SEVERE, null, ex);
         }*/
 
-        // Stack<DocElementPref> stack = new Stack<>();
-        File inputFile = new File("firstTest.xml");
-        XmlDocument doc = Utils.parse(inputFile);
+        // Stack<DocElementPref> stack = new Stack<>(); 
         //doc.buildPrefStack(stack);
         // doc = null;   
         //System.out.println("Hs before PrefTiwg2Stack: " + Hs.toString());
-        GTPResult response = null, result = null;
+   /*     GTPResult response = null, result = null;
         Thread t2 = new Thread() {
             public void run() {
+                File inputFile = new File("firstTest.xml");
+                XmlDocument doc = Utils.parse(inputFile);
                 Stack<DocElementPref> stack = new Stack<>();
                 doc.buildPrefStack(stack);
                 long startTime = System.nanoTime();
                 HierachicalStack Hs = GenData.generateHierachicalStackForTreeBank();
                 MainFunctions instance = new MainFunctions();
                 instance.PrefTwig2Stack(stack, Hs);
-                //instance.filterHS(Hs);
+                instance.filterHS(Hs);
                 SOT eSOT = Hs.makeSOT();
                 GTPResult response = instance.enumTiwg2Stack(Hs, eSOT);
                 long endTime = System.nanoTime();
                 long totalTime = endTime - startTime;
-                System.out.println(totalTime);
+                System.out.println("PrefTwig2Stack " + totalTime);
+                System.out.println("+++ " + response.getTupes().size());
             }
         };
+        Thread t1 = new Thread() {
+            public void run() {
+                File inputFile = new File("firstTest.xml");
+                XmlDocument doc = Utils.parse(inputFile);
+                Stack<DocElement> stack1 = new Stack<>();
+                doc.buildStack(stack1);
+                long startTime = System.nanoTime();
+                HierachicalStack hs = GenData.generateHierachicalStackForTreeBank();
+                Twig2Stack instance = new Twig2Stack();
+                instance.twig2Stack(stack1, hs);
+                SOT eSOT = hs.makeSOT();
+                GTPResult result = instance.enumTiwg2Stack(hs, eSOT);
+                long endTime = System.nanoTime();
+                long totalTime = endTime - startTime;
+                System.out.println("Twig2Stack " + totalTime);
+                System.out.println("--- " + result.getTupes().size());
+            }
+        };
+      /*   //t1.start(); 
+         t1.setPriority(10);
+         t1.start(); */ 
+/*
+        Thread t3 = new Thread() {
+            public void run() {
+                File inputFile = new File("testPref.xml");
+                XmlDocument doc = Utils.parse(inputFile);
+                Stack<DocElementPref> stack = new Stack<>();
+                doc.buildPrefStack(stack);
+                long startTime = System.nanoTime();
+                HierachicalStack Hs = GenData.generateHierachicalStackForDataTest2DB();
+                MainFunctions instance = new MainFunctions();
+                instance.PrefTwig2Stack(stack, Hs);
+                System.out.println("Hierachical Before =  " + Hs);
+                instance.filterHS(Hs);
+                System.out.println("Hierachical Before after =  " + Hs.printTop());
+                SOT eSOT = Hs.makeSOT();
+                GTPResult response = instance.enumTiwg2Stack(Hs, eSOT);
+                long endTime = System.nanoTime();
+                long totalTime = endTime - startTime;
+                System.out.println("PrefTwig2Stack " + totalTime);
+                System.out.println("+++ " + response);
+            }
+        };
+      /  t3.start(); */
 
-        for (int i = 0; i <= 10; i++) {
-            Thread t1 = new Thread() {
-                public void run() {
-                    Stack<DocElement> stack = new Stack<>();
-                    doc.buildStack(stack);
-                    long startTime = System.nanoTime();
-                    HierachicalStack hs = GenData.generateHierachicalStackForTreeBank();
-                    Twig2Stack instance = new Twig2Stack();
-                    instance.twig2Stack(stack, hs);
-                    SOT eSOT = hs.makeSOT();
-                    GTPResult result = instance.enumTiwg2Stack(hs, eSOT);
-                    long endTime = System.nanoTime();
-                    long totalTime = endTime - startTime;
-                    System.out.println(totalTime);
+        Thread t3 = new Thread() {
+            public void run() { 
+                HierachicalStack Hs = GenData.generateHierachicalStackForDataTest2DB();
+                try {
+                    Home fen = new Home(Hs,"testPref.xml");
+                    fen.setVisible(true);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(Preftwig2Stack.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            };
-            t1.start();
-        } 
+            }
+        };
+        t3.start();
     }
 
 }

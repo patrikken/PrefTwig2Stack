@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a1> 
+	<a2> 
+		<a3> 
+			<b1> 
+				<d1>
+					<f1>25</f1>
+				</d1>
+				<c1>'Cameroun'</c1>
+			</b1>
+		</a3>
+		<b2>
+			<a4>
+				<b3>
+					<d2>
+						<f2>45</f2>
+					</d2>
+					<c2> 
+						<e2>'Dschang'</e2>
+						'Cameroun'
+					</c2>
+				</b3>
+			</a4>
+			<c3>
+				<e1>'Dschang'</e1>
+				'Cameroun'
+			</c3>
+		</b2>
+	</a2>
+	<b4> 
+		<f3>17</f3>
+	</b4>
+</a1>
+
+

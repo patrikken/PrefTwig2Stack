@@ -41,7 +41,7 @@ public class DocElement {
     }
 
     public int getLeftPos() {
-        return leftPos;
+        return leftPos; 
     }
 
     public void setLeftPos(int leftPos) {
@@ -121,7 +121,8 @@ public class DocElement {
     }
     
     public String print() {
-        return this.tag +"["+leftPos+","+rigthPos+"]";
+        //return this.tag +"["+leftPos+","+rigthPos+"]";
+        return this.toString();
     }
 
 }

@@ -7,11 +7,19 @@ package View;
 
 //import de.javasoft.plaf.synthetica.SyntheticaWhiteVisionLookAndFeel;
 //import de.javasoft.plaf.synthetica.SyntheticaOrangeMetallicLookAndFeel;
+import DataClass.DocElement;
+import DataClass.DocElementPref;
+import DataClass.GTPResult;
+import DataClass.HierachicalStack;
+import DataClass.SOT;
+import DataClass.Stack;
 import DataClass.XmlDocument;
+import DataGen.GenData;
 import Helpers.Utils;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -34,16 +42,20 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath; 
+import javax.swing.tree.TreePath;
+import preftwig2stack.MainFunctions;
 import xmleditorkit.XMLEditorKit;
 
 /**
  *
  * @author patrik
  */
-public class Home extends javax.swing.JFrame { 
+public class Home extends javax.swing.JFrame {
 
-    private boolean edited; 
+    private boolean edited;
+    XmlDocument doc;
+    HierachicalStack Hs;
+    boolean isTest = true;
 
     /**
      * Creates new form Home
@@ -56,29 +68,57 @@ public class Home extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
-        initComponents(); 
+        initComponents();
     }
-    
-    public Home(XmlDocument doc) throws UnsupportedLookAndFeelException {  
+
+    public Home(XmlDocument doc) throws UnsupportedLookAndFeelException {
         try {
             UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaWhiteVisionLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
-        DefaultMutableTreeNode root= Utils.toTreeModel(doc);
-        DefaultTreeModel tree = new DefaultTreeModel(root); 
-        jTree1.setModel(tree); 
-        jEditorPane1.setFont( new Font( "Courier", Font.PLAIN, 12));
-        jEditorPane1.setEditorKit(new XMLEditorKit()); 
+        DefaultMutableTreeNode root = Utils.toTreeModel(doc);
+        DefaultTreeModel tree = new DefaultTreeModel(root);
+        jTree1.setModel(tree);
+        jEditorPane1.setFont(new Font("Courier", Font.PLAIN, 12));
+        jEditorPane1.setEditorKit(new XMLEditorKit());
         try {
-            jEditorPane1.read(new FileInputStream("doc.xml"), doc); 
+            jEditorPane1.read(new FileInputStream("doc.xml"), doc);
             jEditorPane1.setEditable(true);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public Home(HierachicalStack hs, String file) throws UnsupportedLookAndFeelException {
+        try {
+            UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaWhiteVisionLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        initComponents();
+        Hs = hs;
+        this.doc = Utils.parse(new File(file));
+        printQuery();
+        jEditorPane1.setFont(new Font("Courier", Font.PLAIN, 12));
+        jEditorPane1.setEditorKit(new XMLEditorKit());
+        try {
+            jEditorPane1.read(new FileInputStream(file), doc);
+            jEditorPane1.setEditable(true);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void printQuery() {
+        DefaultMutableTreeNode root = Utils.toTreeModel(Hs, "");
+        DefaultTreeModel tree = new DefaultTreeModel(root);
+        jTree1.setModel(tree);
     }
 
     /**
@@ -96,8 +136,6 @@ public class Home extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
@@ -107,14 +145,21 @@ public class Home extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
         jLabel2 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jToggleButton2 = new javax.swing.JToggleButton();
+        jButton1 = new javax.swing.JButton();
+        jToggleButton3 = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
@@ -133,8 +178,8 @@ public class Home extends javax.swing.JFrame {
         jToolBar1.setBackground(new java.awt.Color(0, 126, 255));
         jToolBar1.setRollover(true);
 
-        jButton4.setText("fgd");
-        jButton4.setToolTipText("Nouveau projet (Ctrl+N)");
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/img/run_exc.png"))); // NOI18N
+        jButton4.setToolTipText("Run");
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -145,41 +190,22 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton4);
 
-        jButton5.setText("fg");
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/img/prj_obj.png"))); // NOI18N
         jButton5.setToolTipText("Annuler");
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton5);
-
-        jButton2.setText("fgdf");
-        jButton2.setToolTipText("Sauvegarder (Ctrl+S)");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton2);
-
-        jButton6.setText("fgf");
-        jButton6.setToolTipText("Exécuter");
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton6);
 
         jEditorPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jScrollPane3.setViewportView(jEditorPane1);
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu Light", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Ubuntu Light", 0, 18)); // NOI18N
         jLabel1.setText("XML document");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -199,24 +225,57 @@ public class Home extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane1.setViewportView(jTree1);
 
-        jLabel2.setFont(new java.awt.Font("Ubuntu Light", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Ubuntu Light", 0, 18)); // NOI18N
         jLabel2.setText("Requête GTP avec preference");
+
+        jToggleButton1.setText("Requête employé");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
+        jToggleButton2.setText("Requête test");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Autre requêtes...");
+
+        jToggleButton3.setText("Requête TreeBank");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jToggleButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))))
+                .addGap(22, 22, 22))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,16 +283,38 @@ public class Home extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(357, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jToggleButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jToggleButton1)
+                        .addGap(8, 8, 8)
+                        .addComponent(jToggleButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap(298, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanel2);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel3.setFont(new java.awt.Font("Ubuntu Light", 0, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Ubuntu Light", 0, 18)); // NOI18N
         jLabel3.setText("Résultats de la requête");
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        jTextArea1.setRows(5);
+        jScrollPane4.setViewportView(jTextArea1);
+
+        jButton2.setText("Effacer");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -242,30 +323,29 @@ public class Home extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap(199, Short.MAX_VALUE))
+            .addComponent(jScrollPane4)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
-
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem5.setText("Ouvrir un document XML");
-        jMenuItem5.setToolTipText("");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem5);
         jMenu1.add(jSeparator1);
         jMenu1.add(jSeparator2);
         jMenu1.add(jSeparator3);
+
+        jMenuItem2.setText("Charger la requête des emplés");
+        jMenu1.add(jMenuItem2);
 
         jMenuItem4.setText("Quitter");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -312,41 +392,86 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-
-        getAccessibleContext().setAccessibleName("Prototype PrefTwig2Stack");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     //using to create an projet
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
- 
-    /*  
-     *   we using this method to open an projet 
-     */
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
-    }//GEN-LAST:event_jButton2ActionPerformed
+        jTextArea1.append("Processing...\n");
+        MainFunctions instance = new MainFunctions();
+        Stack<DocElementPref> stack = new Stack<>();
+        doc.buildPrefStack(stack);
+        if (isTest) {
+            instance.PrefTwig2Stack(stack, Hs, true);
+        } else {
+            instance.PrefTwig2Stack(stack, Hs);
+        }
+        System.out.println("Hierachical Before Filter =  " + Hs);
+        SOT eSOT = Hs.makeSOT();
+        GTPResult response = instance.enumTiwg2Stack(Hs, eSOT);
+        jTextArea1.append("Tous les tuples possibles  \n" + response.printTuples());
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        
-    }//GEN-LAST:event_jButton6ActionPerformed
+        instance.filterHS(Hs); // Filter the stack
+        System.out.println("Hierachical after Filter =  " + Hs.printTop());
+        eSOT = Hs.makeSOT();
+        response = instance.enumTiwg2Stack(Hs, eSOT);
+        jTextArea1.append("Meilleures resultats \n" + response.printTuples());
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        openDocument();
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        this.openDocument();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        if (jToggleButton2.isSelected()) {
+            Hs = GenData.generateHierachicalStackForDataTest2DB();
+            printQuery();
+            jToggleButton1.setSelected(false);
+            jToggleButton3.setSelected(false);
+            isTest = true;
+        } else {
+            System.out.println("NoSelected");
+        }
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        if (jToggleButton1.isSelected()) {
+            Hs = GenData.generateHierachicalStackForEmpleDB();
+            jToggleButton2.setSelected(false);
+            jToggleButton3.setSelected(false);
+            printQuery();
+            isTest = true;
+        } else {
+            System.out.println("NoSelected");
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       jTextArea1.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        if (jToggleButton3.isSelected()) {
+            Hs = GenData.generateHierachicalStackForTreeBank();
+            printQuery();
+            jToggleButton1.setSelected(false);
+            jToggleButton2.setSelected(false);
+            isTest = false;
+        } else {
+            System.out.println("NoSelected");
+        }
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -386,17 +511,10 @@ public class Home extends javax.swing.JFrame {
             }
         });
     }
- 
-    /* 
-     * this methode help to know when we edited a project in this case we can save it 
-     */
-    public void currenProjetEdited() {
-        edited = true;
-        jButton2.setEnabled(true);
-    }
+
 
     /* 
-     * this methode help to open and existing project 
+     * this methode help to open and existing XMLDocument 
      */
     public void openDocument() {
         FileInputStream fin = null;
@@ -406,12 +524,17 @@ public class Home extends javax.swing.JFrame {
         choix.setFileSelectionMode(javax.swing.JFileChooser.FILES_ONLY);
         int retour = choix.showOpenDialog(this);
         if (retour == JFileChooser.APPROVE_OPTION) {
-            file = choix.getSelectedFile().getAbsolutePath(); 
+            file = choix.getSelectedFile().getAbsolutePath();
             try {
                 fin = new FileInputStream(file);
+                jEditorPane1.read(new FileInputStream(file), doc);
+                jEditorPane1.setEditable(true);
+                this.doc = Utils.parse(new File(file));
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, "Le fichier n'existe pas !", "Entré erroner", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
                     fin.close();
@@ -421,15 +544,13 @@ public class Home extends javax.swing.JFrame {
             }
         }
     }
- 
- 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -443,17 +564,22 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables

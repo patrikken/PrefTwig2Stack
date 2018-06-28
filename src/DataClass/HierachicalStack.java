@@ -6,6 +6,11 @@
 package DataClass;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 /**
  *
@@ -22,11 +27,16 @@ public class HierachicalStack {
 
     private boolean isReturnNode;
 
+    private ArrayList<String> contraints;
+
+    ;
+
     public HierachicalStack(String name) {
         stackTrees = new ArrayList<>();
         childs = new ArrayList<>();
         this.name = name;
         isReturnNode = false;
+        contraints = new ArrayList<>();
     }
 
     public HierachicalStack(String name, boolean isReturnNode) {
@@ -34,23 +44,72 @@ public class HierachicalStack {
         this.childs = new ArrayList<>();
         this.name = name;
         this.isReturnNode = isReturnNode;
+        contraints = new ArrayList<>();
     }
 
     public HierachicalStack() {
         stackTrees = new ArrayList<>();
         childs = new ArrayList<>();
         this.name = "";
+        contraints = new ArrayList<>();
     }
 
     public HierachicalStack getMatchingQueryNode(String query_node) {
         if (name.equals(query_node)) {
             return this;
         }
+        /* if (name.equalsIgnoreCase("" + query_node.charAt(0))) {
+            return this;
+        }*/
         if (childs.isEmpty()) {
             return null;
         }
         for (Axis<HierachicalStack> ax : childs) {
             HierachicalStack hs = ax.getTarget().getMatchingQueryNode(query_node);
+            if (hs != null) {
+                return hs;
+            }
+        }
+        return null;
+    }
+
+    public HierachicalStack getMatchingQueryNode2(String query_tag, String query_value) {
+        /*if (name.equals(query_node)) {
+            return this;
+        }*/
+        System.out.println("Contrainte ************** ");
+        if (name.equals(query_tag)) {
+            if (!this.contraints.isEmpty()) {
+                System.out.println("Contrainte ************** ");
+                ScriptEngineManager mgr = new ScriptEngineManager();
+                ScriptEngine engine = mgr.getEngineByName("JavaScript");
+                boolean b;
+                for (String t : this.contraints) {
+                    String toEval = query_value + t;
+                    System.out.println("Contrainte : " +t);
+                    if (query_value.equals("")) {
+                        return null;
+                    }
+                    
+                    try {
+                        b = (boolean) engine.eval(toEval);
+                        if (!b) {
+                            return null;
+                        }
+                    } catch (ScriptException ex) {
+                        Logger.getLogger(HierachicalStack.class.getName()).log(Level.SEVERE, null, ex);
+                        return null;
+                    }
+                }
+
+            }
+            return this;
+        }
+        if (childs.isEmpty()) {
+            return null;
+        }
+        for (Axis<HierachicalStack> ax : childs) {
+            HierachicalStack hs = ax.getTarget().getMatchingQueryNode2(query_tag, query_value);
             if (hs != null) {
                 return hs;
             }
@@ -207,6 +266,22 @@ public class HierachicalStack {
             return true;
         }
         return false;
+    }
+
+    public ArrayList<String> getContraint() {
+        return contraints;
+    }
+
+    public void setContraint(ArrayList<String> contraint) {
+        this.contraints = contraint;
+    }
+
+    public void addContraint(String contraint) {
+        this.contraints.add(contraint);
+    }
+
+    public boolean isLeaf() {
+        return childs.isEmpty();
     }
 
 }

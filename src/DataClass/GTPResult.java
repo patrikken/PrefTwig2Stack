@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package DataClass;
-
+ 
 import java.util.ArrayList;
 import java.util.HashMap; 
 import java.util.Map;
@@ -76,6 +76,18 @@ public class GTPResult {
                 toRet += "(" + entry.getKey() + "," + entry.getValue() + ")";
             }
             toRet += "],";
+        }
+        return toRet; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public String printTuples() {
+        String toRet = "";
+        for (Map<String, String> tuple : result) {
+            toRet += "(";
+            for (Map.Entry<String, String> entry : tuple.entrySet()) {
+                toRet += entry.getValue() +",";
+            }
+            toRet += ")\n";
         }
         return toRet; //To change body of generated methods, choose Tools | Templates.
     }

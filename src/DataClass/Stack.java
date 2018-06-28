@@ -6,7 +6,7 @@
 package DataClass;
 
 import java.util.ArrayList;
-
+ 
 /**
  *
  * @author patrik

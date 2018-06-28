@@ -63,7 +63,8 @@ public class XMLHandler extends DefaultHandler {
 
     @Override
     public void characters(char[] chars, int start, int length) throws SAXException {
-        doc.getRoot().setValue(new String(chars, start, length));
+        String s = new String(chars, start, length);  
+        doc.getRoot().setValue(s.trim().replaceAll("\n", ""));
     }
 
     @Override

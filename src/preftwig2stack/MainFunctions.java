@@ -114,6 +114,19 @@ public class MainFunctions {
         while (!stack.isEmpty()) {
             currentElem = stack.pop();
             currentElemHS = hs.getMatchingQueryNode(currentElem.getTag());
+            //currentElemHS = hs.getMatchingQueryNode2(currentElem.getTag(), currentElem.getValue());
+            if (currentElemHS != null) {
+                MatchOneNode(currentElem, currentElemHS);
+            }
+        }
+    }
+
+    public void PrefTwig2Stack(Stack<DocElementPref> stack, HierachicalStack hs, boolean b) {
+        DocElementPref currentElem;
+        HierachicalStack currentElemHS;
+        while (!stack.isEmpty()) {
+            currentElem = stack.pop();
+            currentElemHS = hs.getMatchingQueryNode2(currentElem.getTag(), currentElem.getValue());
             if (currentElemHS != null) {
                 MatchOneNode(currentElem, currentElemHS);
             }
@@ -137,6 +150,9 @@ public class MainFunctions {
      */
     public SOT pointPC(DocElement e, HierachicalStack Hs) {
         SOT sot = new SOT();
+        if (e == null) {
+            return sot;
+        }
         String hsName;
         for (Axis<ChildResults> ax : e.getChildsResults()) {
             hsName = ax.getTarget().getHsName();
@@ -236,17 +252,20 @@ public class MainFunctions {
         } else {
             if (hs.isReturnNode()) {
                 for (DocElement e : eSOT.getElements()) {
-                    branchResult = new GTPResult();
-                    for (Axis<HierachicalStack> ax : hs.getChilds()) {
-                        HierachicalStack childHS = ax.getTarget();
-                        if (!childHS.isExistingCheckinNode()) {
-                            mSOT = computeTotalEffects(new SOT(new Tree(e)), ax.getLabel(), childHS);
-                            GTPResult iterm = enumTiwg2Stack(childHS, mSOT);
-                            branchResult.cartesianProduct(iterm);
+                    if (e != null) {
+                        branchResult = new GTPResult();
+                        for (Axis<HierachicalStack> ax : hs.getChilds()) {
+                            HierachicalStack childHS = ax.getTarget();
+                            if (!childHS.isExistingCheckinNode()) {
+                                mSOT = computeTotalEffects(new SOT(new Tree(e)), ax.getLabel(), childHS);
+                                GTPResult iterm = enumTiwg2Stack(childHS, mSOT);
+                                branchResult.cartesianProduct(iterm);
+                            }
                         }
+                        branchResult.setColumn(hs.getName(), e.print());
+                        totalResult.addTuples(branchResult.getTupes());
                     }
-                    branchResult.setColumn(hs.getName(), e.print());
-                    totalResult.addTuples(branchResult.getTupes());
+
                 }
                 return totalResult;
             } else {
