@@ -206,7 +206,7 @@ public class Home extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jEditorPane1);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu Light", 0, 18)); // NOI18N
-        jLabel1.setText("XML document");
+        jLabel1.setText("Document XML");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -233,7 +233,7 @@ public class Home extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTree1);
 
         jLabel2.setFont(new java.awt.Font("Ubuntu Light", 0, 18)); // NOI18N
-        jLabel2.setText("Requête GTP avec preference");
+        jLabel2.setText("Requête GTP avec préférences");
 
         jToggleButton1.setText("Requête employé");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -404,7 +404,7 @@ public class Home extends javax.swing.JFrame {
 
     //using to create an projet
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        jTextArea1.append("Processing...\n");
+        jTextArea1.append("Evaluation en cour...\n");
         MainFunctions instance = new MainFunctions();
         Stack<DocElementPref> stack = new Stack<>();
         doc.buildPrefStack(stack);
@@ -416,13 +416,13 @@ public class Home extends javax.swing.JFrame {
         System.out.println("Hierachical Before Filter =  " + Hs);
         SOT eSOT = Hs.makeSOT();
         GTPResult response = instance.enumTiwg2Stack(Hs, eSOT);
-        jTextArea1.append("Tous les tuples possibles  \n" + response.printTuples());
+        jTextArea1.append("\nTous les tuples possibles  \n" + response.printTuples());
 
         instance.filterHS(Hs); // Filter the stack
         System.out.println("Hierachical after Filter =  " + Hs.printTop());
         eSOT = Hs.makeSOT();
         response = instance.enumTiwg2Stack(Hs, eSOT);
-        jTextArea1.append("Meilleures resultats \n" + response.printTuples());
+        jTextArea1.append("\nMeilleures tuples \n" + response.printTuples());
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed

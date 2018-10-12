@@ -55,10 +55,13 @@ public class Utils {
         } else {
             nodeLabel = hs.getName();
         }
-        for (String t : hs.getContraint()) {
-            nodeLabel += " [Content " + t +"]";
+        if (hs.isReturnNode()) {
+            nodeLabel = "^" + hs.getName();
         }
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(nodeLabel);
+        for (String t : hs.getContraint()) {
+            nodeLabel += " [Content " + t + "]";
+        }
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(nodeLabel); 
         if (hs.isLeaf()) {
             return root;
         } else {

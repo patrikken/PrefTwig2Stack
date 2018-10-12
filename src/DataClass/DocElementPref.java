@@ -42,8 +42,8 @@ public class DocElementPref extends DocElement {
     public void updatePreferenceTable(Map<String, Integer> table) {
         for (Map.Entry<String, Integer> entry : table.entrySet()) {
             if (this.prefTable.containsKey(entry.getKey())) {
-                if (prefTable.get(entry.getKey()) >= entry.getValue()) {
-                    prefTable.put(entry.getKey(), entry.getValue());
+                if (prefTable.get(entry.getKey()) > entry.getValue() && entry.getValue() > 0) {
+                    prefTable.replace(entry.getKey(), entry.getValue());
                 }
             } else {
                 prefTable.put(entry.getKey(), entry.getValue());
@@ -57,7 +57,7 @@ public class DocElementPref extends DocElement {
 
     @Override
     public String toString() {
-        return super.toString()+" map ="+prefTable +" "+getValue();
+        return super.toString()+" "+prefTable;
     }
     
     public ArrayList<String> dim(){

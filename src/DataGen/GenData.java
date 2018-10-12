@@ -87,7 +87,7 @@ public class GenData {
     }
 
     public static HierachicalStack generateHierachicalStackForDataTest2DB() {
-        HierachicalStack Hs = new HierachicalStack("A");
+        HierachicalStack Hs = new HierachicalStack("A",true);
 
         HierachicalStack childHS = new HierachicalStack("B", true);
         Hs.addChildsHS(childHS, Constantes.PC_EDGE);

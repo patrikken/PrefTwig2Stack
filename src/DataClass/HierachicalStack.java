@@ -76,21 +76,19 @@ public class HierachicalStack {
     public HierachicalStack getMatchingQueryNode2(String query_tag, String query_value) {
         /*if (name.equals(query_node)) {
             return this;
-        }*/
-        System.out.println("Contrainte ************** ");
-        if (name.equals(query_tag)) {
-            if (!this.contraints.isEmpty()) {
-                System.out.println("Contrainte ************** ");
+        }*/ 
+        if (name.equalsIgnoreCase("" + query_tag.charAt(0))) {
+            if (!this.contraints.isEmpty()) { 
                 ScriptEngineManager mgr = new ScriptEngineManager();
                 ScriptEngine engine = mgr.getEngineByName("JavaScript");
                 boolean b;
                 for (String t : this.contraints) {
                     String toEval = query_value + t;
-                    System.out.println("Contrainte : " +t);
+                    System.out.println("Contrainte : " + t);
                     if (query_value.equals("")) {
                         return null;
                     }
-                    
+
                     try {
                         b = (boolean) engine.eval(toEval);
                         if (!b) {

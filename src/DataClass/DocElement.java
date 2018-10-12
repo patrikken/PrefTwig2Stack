@@ -122,7 +122,7 @@ public class DocElement {
     
     public String print() {
         //return this.tag +"["+leftPos+","+rigthPos+"]";
-        return this.toString();
+        return this.toString(); 
     }
 
 }

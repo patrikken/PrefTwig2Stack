@@ -17,6 +17,9 @@ import DataGen.GenData;
 import Helpers.Utils;
 import View.Home;
 import java.io.File;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.ScriptEngine;
@@ -59,7 +62,7 @@ public class Preftwig2Stack {
         //doc.buildPrefStack(stack);
         // doc = null;   
         //System.out.println("Hs before PrefTiwg2Stack: " + Hs.toString());
-   /*     GTPResult response = null, result = null;
+/*        GTPResult response = null, result = null;
         Thread t2 = new Thread() {
             public void run() {
                 File inputFile = new File("firstTest.xml");
@@ -81,27 +84,58 @@ public class Preftwig2Stack {
         };
         Thread t1 = new Thread() {
             public void run() {
+                ThreadMXBean thread = ManagementFactory.getThreadMXBean();
+                Runtime runtime = Runtime.getRuntime();
+                runtime.gc();
+                long initialMemory = runtime.totalMemory() - runtime.freeMemory();
+                long initialTime = thread.getCurrentThreadCpuTime();
+
                 File inputFile = new File("firstTest.xml");
                 XmlDocument doc = Utils.parse(inputFile);
                 Stack<DocElement> stack1 = new Stack<>();
                 doc.buildStack(stack1);
-                long startTime = System.nanoTime();
-                HierachicalStack hs = GenData.generateHierachicalStackForTreeBank();
-                Twig2Stack instance = new Twig2Stack();
+                long startTime = System.currentTimeMillis();
+                 HierachicalStack hs = GenData.generateHierachicalStackForTreeBank();
+               Twig2Stack instance = new Twig2Stack();
                 instance.twig2Stack(stack1, hs);
                 SOT eSOT = hs.makeSOT();
                 GTPResult result = instance.enumTiwg2Stack(hs, eSOT);
-                long endTime = System.nanoTime();
+                 
+                long finalTime = thread.getCurrentThreadCpuTime();
+                long finalMemory = runtime.totalMemory() - runtime.freeMemory();
+
+                System.out.println(String.format("Execution Time %s nanoseconds", finalTime - initialTime));
+                System.out.println(String.format("Delta memory %s", finalMemory - initialMemory));
+
+                long endTime = System.currentTimeMillis();
                 long totalTime = endTime - startTime;
                 System.out.println("Twig2Stack " + totalTime);
                 System.out.println("--- " + result.getTupes().size());
             }
         };
-      /*   //t1.start(); 
-         t1.setPriority(10);
-         t1.start(); */ 
-/*
-        Thread t3 = new Thread() {
+        //t1.start();  
+       // t1.start();
+        ThreadMXBean tr = ManagementFactory.getThreadMXBean();
+        long t = tr.getThreadCpuTime(t1.getId());
+
+        long startTime = System.currentTimeMillis();
+
+        File inputFile = new File("firstTest.xml");
+        XmlDocument doc = Utils.parse(inputFile);
+        Stack<DocElement> stack1 = new Stack<>();
+        doc.buildStack(stack1);
+        HierachicalStack hs = GenData.generateHierachicalStackForTreeBank();
+        Twig2Stack instance = new Twig2Stack();
+        instance.twig2Stack(stack1, hs);
+        SOT eSOT = hs.makeSOT();
+        GTPResult result2 = instance.enumTiwg2Stack(hs, eSOT);
+
+        long endTime = System.currentTimeMillis();
+        System.out.println(String.format("****Delta memory %s", endTime - startTime));
+
+        System.err.println(tr.isThreadCpuTimeEnabled());
+        System.out.println("CPU Time " + t);
+        /*       Thread t3 = new Thread() {
             public void run() {
                 File inputFile = new File("testPref.xml");
                 XmlDocument doc = Utils.parse(inputFile);
@@ -122,19 +156,18 @@ public class Preftwig2Stack {
                 System.out.println("+++ " + response);
             }
         };
-      /  t3.start(); */
-
+        t3.start(); */
         Thread t3 = new Thread() {
-            public void run() { 
+            public void run() {
                 HierachicalStack Hs = GenData.generateHierachicalStackForDataTest2DB();
                 try {
-                    Home fen = new Home(Hs,"testPref.xml");
+                    Home fen = new Home(Hs, "testPref.xml");
                     fen.setVisible(true);
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(Preftwig2Stack.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        };
+        }; 
         t3.start();
     }
 
