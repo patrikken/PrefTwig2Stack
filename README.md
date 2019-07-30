@@ -7,4 +7,4 @@ When exact queries are applied to them, there is a great risk of obtaining an em
 preference queries aim to return all the best results so that empty or overly important
 results are avoided.
 
-Here is a Java Standalone application for querying XML documents with requests with preferences based on an XQuery extension for this purpose. Using Generalized Tree Patern for query representation
+Here is a Java Standalone application for querying XML documents with requests with preferences based on an XQuery extension for this purpose. Using Generalized Tree Patern (GTP) for query representation
